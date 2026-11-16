@@ -242,7 +242,9 @@ dashes. Parameters are enforced at start, all 400 and not retryable:
 `param_required`, `param_type`, `param_choice`, `param_unknown`; a `default`
 fills an absent one. A job declaring no params takes any keys — but `params` is still a JSON object (`"x"`, `[1]` or `5` is `param_type`, declared params or not). CLI `--param` strings
 are coerced to the declared type; a `float` param arrives as a float (`2` and
-`"2"` are `2.0`), defaults included.
+`"2"` are `2.0`), defaults included. A job with a `schedule` cannot have a
+`required` param — a scheduled run is given none, so the deploy is refused; give
+it a `default`.
 
 - **Refused as `removed_key`** (hint names the replacement): `retries` (runs are
   never retried; a person reruns), `viewer_runnable` (the app's own button
