@@ -23,7 +23,12 @@ env, logs, jobs) is the **toft-cli** skill.
   exception — the platform tells them their mount point and forwards the full
   path, which they expect.
 - **Links, form actions and asset URLs carry `BASE_PATH`.** A root-absolute
-  `/styles.css` asks the *platform*, not you, and 404s.
+  `/styles.css` asks the *platform*, not you, and 404s. Write
+  `f"{BASE_PATH}/styles.css"`, or a relative `styles.css` — but a relative URL
+  resolves against the page, and only static sites, notebooks and marimo are
+  redirected from `/apps/<slug>` to `/apps/<slug>/`: on any other app, a
+  relative link on the bare mount path lands on `/apps/styles.css`. Prefixing
+  with `BASE_PATH` is right from every page.
 - **Frameworks that read the mount point report the full path.** FastAPI and
   Starlette are told it as `root_path`, so `request.url.path` includes
   `/apps/<slug>` — build links from it as they are, without adding `BASE_PATH`
